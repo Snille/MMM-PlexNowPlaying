@@ -58,8 +58,7 @@ Module.register("MMM-PlexNowPlaying",{
 			}
 			var html = "<div class='player bright'><table class='plex-table'><tbody class='plex-table-body'><tr><td class='plex-table-td-img' rowspan='2'><div class='album-art-container'><div class='album-art'><img src='" +this.songData.image+ "'></div></div></td></tr><tr><td class='plex-table-td-txt'><div class='meta'><table class='small'><tr class='track-name bright'><td>"+preTraText+this.songData.title+"</td></tr><tr class='artist-name'><td>"+preArtText+this.songData.artist +"</td></tr><tr class='album-name dimmed'><td>"+preAlbText+this.songData.album+"</td></tr></table></div></td></tr></tbody></table></div>";
 			wrapper.innerHTML = html;
-		}
-		else{
+		}else{
 			this.hide(this.config.animationSpeed);
 			this.failedCounter = this.failedCounter + 1;
 			if(this.failedCounter > this.config.delayCount){
@@ -81,15 +80,15 @@ Module.register("MMM-PlexNowPlaying",{
 			self.songData.playing = false;
 			for (var i=0; i < nowPlaying.length; i++){
 				track = nowPlaying[i];
+				//Log.info(track);
 				if(track.state != "playing") continue;
-
-				self.songData = {}
-				self.songData.title = track.title;
-				self.songData.artist = track.artist;
-				self.songData.album = track.album;
-				self.songData.type = track.type;
-				self.songData.image = self.config.serverURL+track.thumb;
-				self.songData.playing = true;
+					self.songData = {}
+					self.songData.title = track.title;
+					self.songData.artist = track.artist;
+					self.songData.album = track.album;
+					self.songData.type = track.type;
+					self.songData.image = self.config.serverURL+track.thumb;
+					self.songData.playing = true;
 				break; ///  one song is enough for now
 			}
 		}
@@ -101,7 +100,6 @@ Module.register("MMM-PlexNowPlaying",{
 		self.loaded = true;
 		self.updateDom(self.config.animationSpeed);
 	},
-
 	scheduleUpdate: function(delay) {
 		var nextLoad = this.delay;
 		if (typeof delay !== "undefined" && delay >= 0) {
