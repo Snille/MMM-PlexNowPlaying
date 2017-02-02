@@ -33,6 +33,7 @@ module.exports = NodeHelper.create({
 			out.album = trackAttrs.parentTitle;
 			out.title = trackAttrs.title;
 			out.thumb = trackAttrs.thumb;
+			out.type = "music";
 
 			player = track.Player[0].$;
 			out.state = player.state;  //  namely "playing", "paused"
@@ -69,6 +70,7 @@ module.exports = NodeHelper.create({
 				out.album = '';
 			out.title = videoAttrs.title;
 			out.thumb = videoAttrs.thumb;
+			out.type = "video";
 
 			player = video.Player[0].$;
 			out.state = player.state;  //  namely "playing", "paused"

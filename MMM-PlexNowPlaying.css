@@ -1,25 +1,27 @@
-.player{
-margin-top:20px;
-width:200px;
+.player {
+  margin-top: 10px;
 }
-.album-art-container{
+.album-art-container {
 }
-.album-art{
-width:200px;
+.album-art img{
+  vertical-align: middle;
+  width: 200px
 }
-
-.meta{
-
+.meta {
 }
-.track-name{
-font-size:20px;
-font-weight: bold;
-margin: 0;
+.plex-table-td-txt {
+  vertical-align: text-top;
 }
-.artist-name{
-font-size:20px;
-margin: 0px;}
-
-.album-name{
-font-size:16px;
-margin: 0px;}
+.track-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+.artist-name {
+  font-size: 16px;
+  margin: 0px;
+}
+.album-name {
+  font-size: 16px;
+  margin: 0px;
+}

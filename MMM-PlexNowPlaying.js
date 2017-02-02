@@ -7,6 +7,11 @@ Module.register("MMM-PlexNowPlaying",{
 		delayCount: 5,
 		delayInterval: 60 * 1000,
 		animationSpeed: 1000,
+		preArtistText: '',
+		preAlbumText: '',
+		preTrackText: '',
+		preVideoText: '',
+		preYearText: '',
     },
 	getStyles: function() {
 		return ['MMM-PlexNowPlaying.css']
@@ -23,6 +28,9 @@ Module.register("MMM-PlexNowPlaying",{
 	},
     // Override dom generator.
     getDom: function() {
+		var preArtText = '';
+		var preAlbText = '';
+		var preTraText = '';
         var wrapper = document.createElement("div");
 		if (!this.loaded) {
 			wrapper.innerHTML = "Plex data...";
@@ -36,9 +44,19 @@ Module.register("MMM-PlexNowPlaying",{
 		}
 		if(this.songData.playing){
 			this.failedCounter = 0;
+			//Log.info(this.songData.type);
 			this.delay = this.config.updateInterval;
 			this.show(this.config.animationSpeed);
-			var html = "<div class='player bright'><div class='album-art-container'><div class='album-art'><img src='"+ this.songData.image +"' width='200'></div></div><div class='meta'><table class='small'><tr class='track-name bright'><td>"+this.songData.title+"</td></tr><tr class='artist-name'><td>"+this.songData.artist +"</td></tr><tr class='album-name dimmed'><td>"+this.songData.album+"</td></tr></table></div></div>";
+			if (this.songData.type == "music") {
+				preArtText = this.config.preArtistText;
+				preAlbText = this.config.preAlbumText;
+				preTraText = this.config.preTrackText;
+			}else if (this.songData.type == "video") {
+				preArtText = this.config.preYearText;
+				preTraText = this.config.preVideoText;
+				preAlbText = "";
+			}
+			var html = "<div class='player bright'><table class='plex-table'><tbody class='plex-table-body'><tr><td class='plex-table-td-img' rowspan='2'><div class='album-art-container'><div class='album-art'><img src='" +this.songData.image+ "'></div></div></td></tr><tr><td class='plex-table-td-txt'><div class='meta'><table class='small'><tr class='track-name bright'><td>"+preTraText+this.songData.title+"</td></tr><tr class='artist-name'><td>"+preArtText+this.songData.artist +"</td></tr><tr class='album-name dimmed'><td>"+preAlbText+this.songData.album+"</td></tr></table></div></td></tr></tbody></table></div>";
 			wrapper.innerHTML = html;
 		}
 		else{
@@ -49,6 +67,7 @@ Module.register("MMM-PlexNowPlaying",{
 			}
 			this.songData = {playing:false};
 			wrapper.innerHTML = "Not playing...";
+			wrapper.className = "dimmed light small";
 		}
 		this.scheduleUpdate(this.delay);
 		return wrapper;
@@ -68,6 +87,7 @@ Module.register("MMM-PlexNowPlaying",{
 				self.songData.title = track.title;
 				self.songData.artist = track.artist;
 				self.songData.album = track.album;
+				self.songData.type = track.type;
 				self.songData.image = self.config.serverURL+track.thumb;
 				self.songData.playing = true;
 				break; ///  one song is enough for now
